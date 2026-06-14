@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+venv/
+.venv/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+logs/events.log
+
+# Data
+snapshot.json
+
+# Local state
+memory/goals.json
+knowledge/knowledge.json
+identity/profile.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model files
+models/
+
+# Temp
+tmp/
+cache/
+
+# Database
+*.db
