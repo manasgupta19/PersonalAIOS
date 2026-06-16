@@ -10,6 +10,14 @@ from collaboration.council import (
     AgentCouncil
 )
 
+from llm.client import (
+    Brain
+)
+
+brain = (
+    Brain()
+)
+
 
 cos = (
     ChiefOfStaff()
@@ -53,6 +61,29 @@ def analyze(
         )
     )
 
+    insight = (
+
+        brain.ask(
+
+            f"""
+
+    Goal:
+
+    {goal}
+
+    Provide:
+
+    1 analysis
+
+    2 risks
+
+    3 actions
+
+    4 opportunities
+    """
+        )
+    )
+
     return {
 
         "result":
@@ -62,5 +93,8 @@ def analyze(
             actions,
 
         "coordination":
-            coordination
+            coordination,
+
+        "insight":
+            insight
     }

@@ -23,6 +23,9 @@ from components.council_output import (
     render as council_output
 )
 
+from execution.executor import (
+    create_plan
+)
 
 def render():
 
@@ -76,3 +79,27 @@ def render():
                 "coordination"
             ]
         )
+
+        st.subheader(
+            "Chief Of Staff"
+        )
+
+        st.write(
+            data[
+                "insight"
+            ]
+        )
+
+    plan = (
+        create_plan(
+            goal
+        )
+    )
+
+    st.subheader(
+        "Execution Plan"
+    )
+
+    st.json(
+        plan
+    )
