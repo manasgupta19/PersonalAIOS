@@ -2,8 +2,13 @@ import streamlit as st
 
 from pathlib import Path
 
-from services.state import (
-    declutter
+from declutter.scanner import (
+    DeclutterScanner
+)
+
+
+scanner = (
+    DeclutterScanner()
 )
 
 
@@ -13,25 +18,32 @@ def render():
         "Declutter"
     )
 
+    folder = st.text_input(
+
+        "Folder",
+
+        str(
+            Path.home()
+            /
+            "Downloads"
+        )
+    )
+
     if st.button(
-        "Scan Downloads"
+        "Analyze"
     ):
 
-        data = (
+        result = (
 
-            declutter
-            .scan(
-
-                str(
-
-                    Path.home()
-
-                    /
-                    "Downloads"
-                )
+            scanner.scan(
+                folder
             )
         )
 
-        st.write(
-            data
+        st.subheader(
+            "Review"
+        )
+
+        st.json(
+            result
         )

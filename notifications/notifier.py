@@ -1,94 +1,41 @@
-from datetime import datetime
+from notifications.rules import (
+    NotificationRules
+)
+
+from notifications.digest import (
+    Digest
+)
 
 
 class NotificationEngine:
 
+    def __init__(self):
+
+        self.rules = (
+            NotificationRules()
+        )
+
+        self.digest = (
+            Digest()
+        )
+
     def generate(
         self,
-        history
+        tasks
     ):
 
-        notes = []
+        alerts = (
 
-        if not history:
-
-            notes.append(
-                "No goals tracked yet"
+            self.rules
+            .evaluate(
+                tasks
             )
-
-            return notes
-
-        recent = history[-5:]
-
-        notes.append(
-            f"Tracked goals: {len(history)}"
         )
 
-        finance = 0
-        career = 0
-        brand = 0
+        return (
 
-        for item in recent:
-
-            agents = item.get(
-                "agents",
-                []
+            self.digest
+            .create(
+                alerts
             )
-
-            if (
-                "Finance Agent"
-                in agents
-            ):
-                finance += 1
-
-            if (
-                "Career Agent"
-                in agents
-            ):
-                career += 1
-
-            if (
-                "Personal Brand Agent"
-                in agents
-            ):
-                brand += 1
-
-        if career:
-            notes.append(
-                "Career momentum active"
-            )
-
-        if finance:
-            notes.append(
-                "Review financial actions"
-            )
-
-        if brand:
-            notes.append(
-                "Create one valuable social contribution"
-            )
-
-        notes.append(
-            f"Updated: {datetime.now().strftime('%H:%M')}"
         )
-
-        high = 0
-
-        for item in recent:
-
-            if (
-                item.get(
-                    "priority"
-                )
-                == "High"
-            ):
-                high += 1
-
-        if high:
-
-            notes.insert(
-                0,
-                f"{high} high priority items"
-            )
-
-        return notes

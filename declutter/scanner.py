@@ -1,5 +1,4 @@
 from pathlib import Path
-from datetime import datetime
 
 
 class DeclutterScanner:
@@ -9,76 +8,46 @@ class DeclutterScanner:
         folder
     ):
 
-        p = Path(folder)
+        result = {
 
-        if not p.exists():
+            "delete": [],
 
-            return []
+            "review": [],
 
-        result = []
+            "keep": []
+        }
 
-        now = datetime.now()
+        files = (
 
-        for f in p.iterdir():
-
-            try:
-
-                if f.is_file():
-
-                    age = (
-                        now
-                        -
-                        datetime.fromtimestamp(
-                            f.stat().st_mtime
-                        )
-                    ).days
-
-                    if age > 30:
-
-                        result.append({
-
-                            "name":
-                                f.name,
-
-                            "days":
-                                age
-                        })
-
-            except:
-
-                pass
-
-        return sorted(
-
-            result,
-
-            key=lambda x:
-                x["days"],
-
-            reverse=True
+            Path(folder)
+            .glob("*")
         )
 
-    def recommend(
-        self,
-        files
-    ):
+        for f in files:
 
-        if not files:
+            if not f.is_file():
 
-            return []
+                continue
 
-        advice = []
-
-        if len(files) > 20:
-
-            advice.append(
-                "Downloads likely needs review"
+            size = (
+                f.stat()
+                .st_size
             )
 
-        if len(files) > 50:
+            if size < 10000:
 
-            advice.append(
-                "Consider archive folder"
-            )
+                result[
+                    "review"
+                ].append(
+                    f.name
+                )
 
-        return advice
+            else:
+
+                result[
+                    "keep"
+                ].append(
+                    f.name
+                )
+
+        return result

@@ -1,10 +1,20 @@
 import streamlit as st
 
-from services.state import (
+from execution.task_manager import (
+    TaskManager
+)
 
-    notify,
+from notifications.notifier import (
+    NotificationEngine
+)
 
-    memory
+
+tasks = (
+    TaskManager()
+)
+
+notify = (
+    NotificationEngine()
 )
 
 
@@ -14,16 +24,18 @@ def render():
         "Notifications"
     )
 
-    notes = (
+    alerts = (
 
-        notify.generate(
+        notify
+        .generate(
 
-            memory.load()
+            tasks.all()
+
         )
     )
 
-    for n in notes:
+    for a in alerts:
 
         st.info(
-            n
+            a
         )
