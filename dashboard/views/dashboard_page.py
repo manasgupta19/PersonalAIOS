@@ -27,6 +27,14 @@ from execution.executor import (
     create_plan
 )
 
+from automation.scheduler import (
+    Scheduler
+)
+
+brief = (
+    Scheduler()
+)
+
 def render():
 
     st.title(
@@ -102,4 +110,13 @@ def render():
 
     st.json(
         plan
+    )
+
+    st.info(
+
+        f"""
+    Daily Briefing
+
+    {brief.morning_briefing()['time']}
+    """
     )

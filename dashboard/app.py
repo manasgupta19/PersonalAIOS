@@ -10,6 +10,8 @@ from views.declutter_page import render as declutter
 from views.settings_page import render as settings
 from views.execution_page import render as execution
 from views.planning_page import render as planning
+from views.automation_page import render as automation
+
 
 
 PAGES = {
@@ -22,6 +24,7 @@ PAGES = {
     "Settings": settings,
     "Execution": execution,
     "Planning": planning,
+    "Automation": automation,
 }
 
 
