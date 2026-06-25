@@ -1,52 +1,46 @@
-import json
-from pathlib import Path
-
-
-FILE = (
-    Path(__file__)
-    .parent
-    /
-    "tasks.json"
+from storage.json_store import (
+    JsonStore
 )
 
 
 class TaskManager:
 
+    def __init__(self):
+
+        self.path = (
+            "execution/tasks.json"
+        )
+
+        self.store = (
+            JsonStore()
+        )
+
+
     def load(self):
 
-        if not FILE.exists():
+        return self.store.load(
+            self.path,
+            []
+        )
 
-            return []
-
-        text = FILE.read_text()
-
-        if not text.strip():
-
-            return []
-
-        return json.loads(text)
 
     def save(
+        self,
+        tasks
+    ):
+
+        self.store.save(
+            self.path,
+            tasks
+        )
+
+
+    def add(
         self,
         task
     ):
 
-        data = (
-            self.load()
-        )
-
-        data.append(
+        self.store.append(
+            self.path,
             task
         )
-
-        FILE.write_text(
-
-            json.dumps(
-                data,
-                indent=2
-            )
-        )
-
-    def all(self):
-
-        return self.load()

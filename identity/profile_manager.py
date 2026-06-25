@@ -1,45 +1,52 @@
-import json
-from pathlib import Path
-
-
-PROFILE = (
-    Path(__file__)
-    .parent
-    / "profile.json"
+from storage.json_store import (
+    JsonStore
 )
 
 
 class ProfileManager:
 
+    def __init__(self):
+
+        self.path = (
+            "identity/profile.json"
+        )
+
+        self.store = (
+            JsonStore()
+        )
+
+
     def load(self):
 
-        try:
+        return self.store.load(
+            self.path,
+            {}
+        )
 
-            with open(
-                PROFILE,
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                return json.load(f)
-
-        except:
-
-            return {}
 
     def save(
         self,
-        data
+        profile
     ):
 
-        with open(
-            PROFILE,
-            "w",
-            encoding="utf-8"
-        ) as f:
+        self.store.save(
+            self.path,
+            profile
+        )
 
-            json.dump(
-                data,
-                f,
-                indent=2
-            )
+
+    def update(
+        self,
+        key,
+        value
+    ):
+
+        profile = self.load()
+
+        profile[
+            key
+        ] = value
+
+        self.save(
+            profile
+        )

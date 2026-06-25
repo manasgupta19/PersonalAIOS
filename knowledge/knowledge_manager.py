@@ -1,11 +1,7 @@
-import json
-from pathlib import Path
+import os
 
-
-FILE = (
-    Path(__file__)
-    .parent
-    / "knowledge.json"
+from storage.json_store import (
+    JsonStore
 )
 
 
@@ -13,103 +9,35 @@ class KnowledgeManager:
 
     def __init__(self):
 
-        if not FILE.exists():
+        self.path = (
+            "knowledge/knowledge.json"
+        )
 
-            FILE.write_text(
-                "[]",
-                encoding="utf-8"
-            )
+        self.store = (
+            JsonStore()
+        )
 
-    def load(self):
-
-        try:
-
-            with open(
-                FILE,
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                data = json.load(f)
-
-                if not isinstance(
-                    data,
-                    list
-                ):
-
-                    return []
-
-                return data
-
-        except:
-
-            return []
 
     def save(
         self,
-        text,
-        source
+        item,
+        kind
     ):
 
-        if not text:
+        self.store.append(
 
-            return
+            self.path,
 
-        data = self.load()
+            {
+                "type": kind,
+                "value": item
+            }
 
-        entry = {
+        )
 
-            "text":
-                str(text),
 
-            "source":
-                source
-        }
+    def load(self):
 
-        if entry not in data:
-
-            data.append(
-                entry
-            )
-
-        with open(
-            FILE,
-            "w",
-            encoding="utf-8"
-        ) as f:
-
-            json.dump(
-                data,
-                f,
-                indent=2
-            )
-
-    def search(
-        self,
-        query
-    ):
-
-        if not query:
-
-            return []
-
-        q = query.lower()
-
-        result = []
-
-        for item in self.load():
-
-            if (
-
-                q
-                in
-                item["text"]
-                .lower()
-
-            ):
-
-                result.append(
-                    item
-                )
-
-        return result[:10]
+        return self.store.load(
+            self.path
+        )

@@ -1,11 +1,5 @@
-import json
-from pathlib import Path
-
-
-MEMORY_FILE = (
-    Path(__file__)
-    .parent
-    / "goals.json"
+from storage.json_store import (
+    JsonStore
 )
 
 
@@ -13,37 +7,40 @@ class MemoryManager:
 
     def __init__(self):
 
-        if not MEMORY_FILE.exists():
+        self.path = (
+            "memory/goals.json"
+        )
 
-            MEMORY_FILE.write_text(
-                "[]",
-                encoding="utf-8"
-            )
+        self.store = (
+            JsonStore()
+        )
+
 
     def load(self):
 
-        with open(
-            MEMORY_FILE,
-            "r",
-            encoding="utf-8"
-        ) as f:
+        return self.store.load(
+            self.path,
+            []
+        )
 
-            return json.load(f)
 
-    def save_goal(self, data):
+    def save(
+        self,
+        goals
+    ):
 
-        memory = self.load()
+        self.store.save(
+            self.path,
+            goals
+        )
 
-        memory.append(data)
 
-        with open(
-            MEMORY_FILE,
-            "w",
-            encoding="utf-8"
-        ) as f:
+    def add(
+        self,
+        goal
+    ):
 
-            json.dump(
-                memory,
-                f,
-                indent=2
-            )
+        self.store.append(
+            self.path,
+            goal
+        )
