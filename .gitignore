@@ -3,37 +3,34 @@ __pycache__/
 *.pyc
 
 # Virtual env
-venv/
 .venv/
+
+# Runtime
+logs/
+cache/
+
+# Generated
+snapshot.json
+test_llm.py
+
+# State
+memory/*.json
+knowledge/*.json
+identity/*.json
+execution/*.json
+notifications/*.json
+planning/*.json
+automation/*.json
 
 # Streamlit
 .streamlit/secrets.toml
 
-# Logs
-logs/events.log
-
-# Data
-snapshot.json
-
-# Local state
-memory/goals.json
-knowledge/knowledge.json
-identity/profile.json
-
-# IDE
+# VS Code
 .vscode/
-.idea/
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Model files
+# Models
 models/
 
-# Temp
-tmp/
-cache/
-
-# Database
-*.db
+# OS
+Thumbs.db
+.DS_Store
