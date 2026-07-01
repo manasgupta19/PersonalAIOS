@@ -1,19 +1,16 @@
-# Python
+.venv/
 __pycache__/
 *.pyc
 
-# Virtual env
-.venv/
-
-# Runtime
 logs/
 cache/
+tmp/
 
-# Generated
 snapshot.json
 test_llm.py
+tree.txt
+tree*.txt
 
-# State
 memory/*.json
 knowledge/*.json
 identity/*.json
@@ -22,15 +19,10 @@ notifications/*.json
 planning/*.json
 automation/*.json
 
-# Streamlit
 .streamlit/secrets.toml
-
-# VS Code
 .vscode/
+.idea/
 
-# Models
 models/
-
-# OS
 Thumbs.db
 .DS_Store
